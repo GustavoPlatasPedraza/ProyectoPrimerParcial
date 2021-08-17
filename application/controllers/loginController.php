@@ -143,7 +143,7 @@ class loginController extends CI_Controller{
         }catch(Exception $error){
             echo $error;
         }
-        print_r($data);
+       
     }
 
     public function deleteDepartamento($id){
