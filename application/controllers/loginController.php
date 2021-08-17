@@ -146,6 +146,12 @@ class loginController extends CI_Controller{
        
     }
 
+    public function userDocumentos(){
+        $res = $this->login->selectAllCondition("documentos","id_persona",$_SESSION["id_persona"]);
+        //$data["documentos"] = $res;
+        //$this->load->view("inicio/documentos/userDocumentos",$data);
+    }
+
     public function deleteDepartamento($id){
         $this->session->set_flashdata("id_delete",$id);
         $this->session->set_flashdata('message','borrar');
