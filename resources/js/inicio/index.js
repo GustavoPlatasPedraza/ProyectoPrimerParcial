@@ -37,11 +37,11 @@ linkColor.forEach(l=> l.addEventListener('click', colorLink))
 // Your code to run since DOM is loaded and ready
 });
 
-if(message == "succes"){
+if(message == "success"){
     Swal.fire(
         'Exito',
         'registro agregado correctamente',
-        'succes'
+        'success'
     );
     message = "";
 }
@@ -79,7 +79,5 @@ if(message == "cambioAct"){
         'El cambio se ha realizado',
         'success'
     );
-    setTimeout(function () {
-        window.location.href = base_url+"logout";
-      }, 2000);
+    message = "";
 }

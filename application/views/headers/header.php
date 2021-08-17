@@ -29,12 +29,12 @@ if(!isset($_SESSION["id"])){
                 <span class="nav_logo-name">Inicio</span> </a>
                 <!--Admin -->
                 <?php
-                if($_SESSION["tipo"]== 1){
+                if($_SESSION["tipo"] == 1){
                     ?>
                     <div class="nav_list">
-					<a href="#" class="nav_link active" title="Documentos">
+					<a href="<?php echo base_url("adminDocumentos") ?>" class="nav_link active" title="Documentos">
 						<i class='bx bx-book-open nav_icon'></i>
-						<span class="nav_name">Dashboard</span>
+						<span class="nav_name">Documentos</span>
 					</a>
 					<a href="<?php echo base_url("adminPersonas")?>" class="nav_link" title="Personas"> 
                         <i class='bx bx-male nav_icon'></i> 
@@ -44,7 +44,7 @@ if(!isset($_SESSION["id"])){
                         <i class='bx bx-shopping-bag nav_icon'></i>
                         <span class="nav_name">Trabajadores</span>
                     </a> 
-                    <a href="#" title="Departamentos" class="nav_link">
+                    <a href="<?php echo base_url("departamentos")?>" title="Departamentos" class="nav_link">
                         <i class='bx bx-buildings nav_icon'></i>
                         <span class="nav_name">Departamentos</span>
                     </a>
@@ -61,9 +61,9 @@ if(!isset($_SESSION["id"])){
                 }else{
                     ?>
                     <div class="nav_list">
-                    <a href="#" class="nav_link" title="Trabajadores">
+                    <a href="<?php echo base_url("userDocumentos") ?>" class="nav_link" title="Trabajadores">
                         <i class='bx bx-shopping-bag nav_icon'></i>
-                        <span class="nav_name">Trabajadores</span>
+                        <span class="nav_name">Documentos</span>
                     </a>
 					<a href="<?php echo base_url("cambiarPass")?>" class="nav_link" title="Cambiar contraseña">
                         <i class='bx bx-lock-alt nav_icon'></i>

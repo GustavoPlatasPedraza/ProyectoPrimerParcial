@@ -7,7 +7,6 @@
                 <th>ID</th>
                 <th>Id Departamento</th>
                 <th>Puesto</th>
-                
                 <th>Estado</th>
                 <th>Editar</th>
                 <th>Eliminar</th>
@@ -21,7 +20,6 @@
                         <td><?php echo $trabajadores["id"] ?></td>
                         <td><?php echo $trabajadores["id_departamento"] ?></td>
                         <td><?php echo $trabajadores["puesto"] ?></td>
-                   
                         <td><?php echo $trabajadores["estado"] ?></td>
                         <td><a href="<?php echo base_url("editTrabajador/".$trabajadores["id"]) ?>"><button class="btn btn-warning">Editar</button></a></td>
                         <td><a href="<?php echo base_url("deleteTrabajador/".$trabajadores["id"]) ?>"><button class="btn btn-danger">Eliminar</button></a></td>
@@ -32,7 +30,7 @@
         </tbody>
     </table>
     <div class="row">
-        <a href="<?php echo base_url("addPersona") ?>" class="btn btn-block btn-success btn-lg">Agregar trabajador</a>
+        <a href="<?php echo base_url("addTrabajador") ?>" class="btn btn-block btn-success btn-lg">Agregar trabajador</a>
     </div>
 	</div>
     <script type="text/javascript">
@@ -42,4 +40,4 @@
     var id_delete = "<?php echo $this->session->flashdata('id_delete'); ?>"
     </script>
 	<?php $this->load->view("footers/footer") ?>
-    <script src="<?php echo base_url("resources/js/delete.js")?>"></script>
+    <script src="<?php echo base_url("resources/js/deleteTrabajadores.js")?>"></script>

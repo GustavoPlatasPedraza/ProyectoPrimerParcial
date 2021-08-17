@@ -31,7 +31,7 @@ if(isset($_SESSION["id"])){
                 <div class="row">
                 <button class="btn btn-block btn-primary btn-lg" type="submit">Iniciar sesión</button>
                 </div>
-                 </form>
+                </form>
             </div>
     </div>
     <script type="text/javascript">
