@@ -42,4 +42,4 @@
     var id_delete = "<?php echo $this->session->flashdata('id_delete'); ?>"
     </script>
 	<?php $this->load->view("footers/footer") ?>
-    <script src="<?php echo base_url("resources/js/deleteTrabajadores.js")?>"></script>
+    <script src="<?php echo base_url("resources/js/deleteDepartamentos.js")?>"></script>
