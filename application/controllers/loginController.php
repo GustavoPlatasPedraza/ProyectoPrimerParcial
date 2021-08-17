@@ -11,13 +11,6 @@ class loginController extends CI_Controller{
     public function index(){
         $this->load->view("login/index");
     }
-    public function prueba(){
-        echo 'funcion'; 
-
-    }
-    public function validarLogin(){
-        $data = $this->input->post();
-        $res = $this->login->getPass($data["correo"]);
 
     public function validarLogin(){
         $data = $this->input->post();
@@ -46,7 +39,7 @@ class loginController extends CI_Controller{
                 $this->session->set_flashdata('message','');
             }
         }
-    }
+    
     
 
     public function inicio(){
@@ -167,7 +160,6 @@ class loginController extends CI_Controller{
     public function addDepartamento(){
         $this->load->view("inicio/departamentos/addDepartamento");
     }
-    public function insertDepartamentos($tabla){
     public function deleteTrabajador($id){
         $this->session->set_flashdata("id_delete",$id);
         $this->session->set_flashdata('message','borrar');
@@ -196,8 +188,7 @@ class loginController extends CI_Controller{
     }
 
 
-        redirect(base_url("trabajadores"));
-    }
+    
   
     public function adminUsuarios(){
         $res = $this->login->adminUsuarios();
@@ -206,7 +197,7 @@ class loginController extends CI_Controller{
     }
 
     public function editUsuario($id){
-        $res = $this->login->getInfoUsuario("usuarios",$id);
+        $res = $this->login->getInfo("usuarios",$id);
         $_SESSION["datosEditUsuario"] = $res;
         $this->load->view("inicio/usuarios/editUsuario");
     }
@@ -230,7 +221,7 @@ class loginController extends CI_Controller{
 
     public function confirmDeleteUsuario(){
         $id = $_POST["id"];
-        $res = $this->login->deleteTbUsuario("usuarios",$id);
+        $res = $this->login->delete("usuarios",$id);
         echo $res;
     }
 

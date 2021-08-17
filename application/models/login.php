@@ -138,29 +138,12 @@ public function deleteDepartamentos($tabla,$id){
         return $query->result_array();
     }
 
-    public function getInfoUsuario($tabla,$id){
-        $this->db->select("*");
-        $this->db->from($tabla);
-        $this->db->where("id",$id);
-        $query = $this->db->get();
-        return $query->row_array();
-    }
-
     public function actInfoUsuarios($data){
         $dataAct = array(
             "n_usuario" => $data["n_usuario"],
             "tipo_usuario" => $data["tipo_usuario"]
         );
         $this->db->update('usuarios',$dataAct,array('id' => $data["id"]));
-    }
-
-    public function deleteTbUsuario($tabla,$id){
-        try {
-            $this->db->delete($tabla,array('id' => $id));
-            return "nice";
-        } catch (Exception $th) {
-            return $th;
-        }
     }
 
     public function selectAllUsuarios(){
@@ -193,13 +176,6 @@ public function deleteDepartamentos($tabla,$id){
         }catch(Exception $error){
             return $error;
         }
-    }
-
-    public function selectAlldepartamentos(){
-        $this->db->select("*");
-        $this->db->from("departamentos");    
-        $query = $this->db->get();
-        return $query->result_array();
     }
     public function selectAllCondition($tabla,$columna,$valor){
         $this->db->select("*");
