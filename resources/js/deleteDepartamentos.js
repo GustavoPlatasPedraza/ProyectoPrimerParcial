@@ -8,7 +8,7 @@ if(message == "borrar"){
         if (result.isConfirmed) {
             $.ajax({
                 type: "POST",
-                url: base_url + 'confirmDeleteTrabaajdores',
+                url: base_url + 'confirmDeleteDeaprtamentos',
                 data: {
                     'id': id_delete
                 },
@@ -19,7 +19,7 @@ if(message == "borrar"){
                             'Se ha eliminado!',
                             'success'
                           ).then(function(){
-                            window.location.href = base_url+"";
+                            window.location.href = base_url+"departamentos";
                           })
                     }else{
                         Swal.fire(
@@ -27,7 +27,7 @@ if(message == "borrar"){
                             data,
                             'error'
                           ).then(function(){
-                            window.location.href = base_url+"";
+                            window.location.href = base_url+"departamentos";
                           })
                     }
                 }
@@ -36,7 +36,7 @@ if(message == "borrar"){
           Swal.fire('No se ha borrado', '', 'info');
           message = "";
           id_datos= "";
-          window.location.href = base_url+"";
+          window.location.href = base_url+"departamentos";
         }
       });
 }
