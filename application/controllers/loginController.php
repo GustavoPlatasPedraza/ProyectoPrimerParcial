@@ -144,7 +144,7 @@ class loginController extends CI_Controller{
     public function userDocumentos(){
         $res = $this->login->selectAllCondition("documentos","id_persona",$_SESSION["id_persona"]);
         $data["documentos"] = $res;
-        $this->load->view("inicio/documentos/userDocumentos",$data);
+        //$this->load->view("inicio/documentos/userDocumentos",$data);
     }
 
       public function addDocumentoUser(){
@@ -154,6 +154,6 @@ class loginController extends CI_Controller{
     public function editDocumentoUser($id){
         $res = $this->login->getInfo("documentos",$id);
         $data["documento"] = $res;
-        $this->load->view("inicio/documentos/editDocumentoUser",$data);
+        //$this->load->view("inicio/documentos/editDocumentoUser",$data);
     }
 }
