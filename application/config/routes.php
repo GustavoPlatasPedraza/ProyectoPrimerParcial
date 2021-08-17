@@ -67,6 +67,11 @@ $route['updatePass'] = 'loginController/updatePass';
 $route['trabajadores'] = 'loginController/trabajadores';
 $route['editTrabajador/(:any)'] = 'loginController/editTrabajador/$1';
 $route['actInfoTrabaajdores'] = 'loginController/actInfoTrabaajdores';
+$route['addTrabajador'] = 'loginController/addTrabajador';
+$route['deleteTrabajador/(:any)'] = 'loginController/deleteTrabajador/$1';
+$route['confirmDeleteTrabaajdores'] = 'loginController/confirmDeleteTrabaajdores';
+$route['insertTrabajador/(:any)'] = 'loginController/insertTrabajador/$1';
+=======
 $route['deleteTrabajador/(:any)'] = 'loginController/deleteTrabajador/$1';
 
 //apartado de departamentos

@@ -167,7 +167,6 @@ class loginController extends CI_Controller{
     public function addDepartamento(){
         $this->load->view("inicio/departamentos/addDepartamento");
     }
-    public function insertDepartamentos($tabla){
     public function deleteTrabajador($id){
         $this->session->set_flashdata("id_delete",$id);
         $this->session->set_flashdata('message','borrar');
@@ -175,7 +174,7 @@ class loginController extends CI_Controller{
     }
     public function confirmDeleteTrabaajdores(){
         $id = $_POST["id"];
-        $res = $this->login->deleteTrabajadores("trabajadores",$id);
+        $res = $this->login->delete("trabajadores",$id);
         echo $res;
     }
 
@@ -192,7 +191,7 @@ class loginController extends CI_Controller{
         $data["estado"] = 1;
         $res = $this->login->insert($data,$tabla);
         $res == "nice" ? $this->session->set_flashdata('message','success') : $this->session->set_flashdata('message','errorInsert');
-        redirect(base_url("departamentos"));
+        redirect(base_url("trabajadores"));
     }
 
 
