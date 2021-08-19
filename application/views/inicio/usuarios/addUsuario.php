@@ -4,9 +4,12 @@
     <form action="<?php echo base_url("insertUsuarios/usuarios") ?>" method="post">
         <div class="row">
             <div class="col-md-12">
-                <input type="text" name="n_usuario" id="n_usuario" class="form-control" placeholder="Escribe el nombre"><br>
-                <input type="text" name="correo" id="correo" class="form-control" placeholder="Escribe el correo">
+                <label for="">Nombre del usuario</label>
+                <input type="text" name="n_usuario" id="n_usuario" class="form-control" placeholder="Escribe el nombre" required><br>
+                <label for="">Correo electronico</label>
+                <input type="text" name="correo" id="correo" class="form-control" placeholder="Escribe el correo" required>
                 <br>
+                <label for="">Persona</label>
                 <select name="id_persona" id="id_persona" class="form-control">
                     <option value="0" disabled selected>Selecciona a una persona</option>
                     <?php
@@ -16,13 +19,14 @@
                     ?>
                 </select>
                 <br>
+                <label for="">Tipo de usuario</label>
                 <select name="tipo_usuario" id="tipo_usuario" class="form-control">
-                    <option value="comun">Común</option>
-                    <option value="admin">Administrador</option>
+                    <option value="0">Común</option>
+                    <option value="1">Administrador</option>
                 </select>
                 <br>
                 <br>
-                <button type="submit" class="btn btn-success btn-block btn-lg form-control">Agregar persona</button>
+                <button type="submit" class="btn btn-success btn-block form-control">Agregar persona</button>
             </div>
         </div>
     </form>

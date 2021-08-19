@@ -44,7 +44,12 @@ class login extends CI_Model{
             "ap_paterno" => $data["ap_paterno"],
             "ap_materno " => $data["ap_materno"]
         );
-        $this->db->update('personas', $dataAct, array('id' =>$data["id"]));
+        try{
+            $this->db->update('personas', $dataAct, array('id' =>$data["id"]));
+            return "nice";
+        }catch(Exception $error){
+            return $error;
+        }
     }
     public function delete($tabla,$id){
         try{
@@ -73,7 +78,7 @@ class login extends CI_Model{
         }
     }
 
- public function trabajadores(){
+    public function trabajadores(){
         $this->db->select("*");
         $this->db->from("trabajadores");
         $query = $this->db->get();
@@ -86,7 +91,12 @@ class login extends CI_Model{
             "puesto" => $data["puesto"],
             "estado " => $data["estado"]
         );
-        $this->db->update('trabajadores', $dataAct, array('id' =>$data["id"]));
+        try{
+            $this->db->update('trabajadores', $dataAct, array('id' =>$data["id"]));
+            return "nice";
+        }catch(Exception $error){
+            return $error;
+        }
     }
 
 
@@ -99,22 +109,27 @@ class login extends CI_Model{
         return $query->result_array();
 }
 
-public function actInfoDepartamentos($data){
-    $dataAct = array(
-        "nombre_departamento" => $data["nombre_departamento"]
-    
-    );
-    $this->db->update('departamentos', $dataAct, array('id' =>$data["id"]));
-}
+    public function actInfoDepartamentos($data){
+        $dataAct = array(
+            "nombre_departamento" => $data["nombre_departamento"]
+        
+        );
+        try{
+            $this->db->update('departamentos', $dataAct, array('id' =>$data["id"]));
+            return "nice";
+        }catch(Exception $error){
+            return $error;
+        }
+    }   
 
-public function deleteDepartamentos($tabla,$id){
-    try{
-        $this->db->delete($tabla, array('id' => $id));
-        return "nice";
-    }catch(Exception $error){
-        return $error;
+    public function deleteDepartamentos($tabla,$id){
+        try{
+            $this->db->delete($tabla, array('id' => $id));
+            return "nice";
+        }catch(Exception $error){
+            return $error;
+        }
     }
-}
 
 
 
@@ -136,7 +151,12 @@ public function deleteDepartamentos($tabla,$id){
             "n_usuario" => $data["n_usuario"],
             "tipo_usuario" => $data["tipo_usuario"]
         );
-        $this->db->update('usuarios',$dataAct,array('id' => $data["id"]));
+        try{
+            $this->db->update('usuarios',$dataAct,array('id' => $data["id"]));
+            return "nice";
+        }catch(Exception $error){
+            return $error;
+        }
     }
 
     public function selectAllUsuarios(){
@@ -170,6 +190,7 @@ public function deleteDepartamentos($tabla,$id){
             return $error;
         }
     }
+    
     public function selectAllCondition($tabla,$columna,$valor){
         $this->db->select("*");
         $this->db->from($tabla);
@@ -178,4 +199,36 @@ public function deleteDepartamentos($tabla,$id){
         return $query->result_array();
     }
     //Apartado de documentos
+    public function createGoogleUser($data){
+        $this->db->insert("users",$data);
+        if($this->db->affected_rows() == 1){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    //funcion para actualizar usuario
+    public function updateGoogleUser($data,$id){
+        $this->db->update("users",$data,array('oauth_id' => $id));
+        if($this->db->affected_rows() == 1){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    //si un usuario ya existe
+    public function googleUserExists($id){
+        $this->db->select("*");
+        $this->db->from('users');
+        $this->db->where('oauth_id',$id);
+        if($this->db->count_all_results() == 1){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
 }

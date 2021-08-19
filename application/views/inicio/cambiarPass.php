@@ -1,6 +1,6 @@
 <?php $this->load->view("headers/header") ?>
-<div class="content">
-    <div class="col-md-12">
+<div class="container">
+<h1>Cambiar conntraseña</h1>
         <form action="<?php echo base_url("updatePass")?>" method="post">
             <div class="row">
                 <label for="">Nueva contraseña</label>
@@ -14,7 +14,6 @@
                 <button type="submit" class="btn btn-block btn-lg btn-success">Cambiar contraseña</button>
             </div>
         </form>
-    </div>
 </div>
 <script type="text/javascript">var base_url="<?php echo base_url(); ?>"</script>
 <?php $this->load->view("footers/footer") ?>

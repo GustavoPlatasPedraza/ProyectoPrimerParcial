@@ -1,6 +1,7 @@
 <?php $this->load->view("headers/header"); ?>
-<h1>Mis archivos</h1>
 <div class="container">
+<h1>Mis archivos</h1>
+
     <div class="row">
 <table class="table table-dark table-striped">
         <thead>
@@ -13,14 +14,14 @@
         </thead>
         <tbody>
             <?php
-                foreach($documentos as $documento){
+                foreach($_SESSION["documentos"] as $documento){
                     ?>
                     <tr style="text-align: center;">
                         <td><?php echo $documento["id"] ?></td>
                         <td><?php echo $documento["nombre_documento"] ?></td>
                         <td><?php echo $documento["tipo_documento"] ?></td>
                         <td><a href="<?php echo base_url("editDocumentoUser/".$documento["id"]) ?>"><button class="btn btn-warning">Editar</button></a></td>
-                        <td><a href="<?php echo base_url("deleteDocumento/".$documento["id"]) ?>"><button class="btn btn-danger">Eliminar</button></a></td>
+                        <td><a href="<?php echo base_url("confirmDocumentoComun/".$documento["id"]) ?>"><button class="btn btn-danger">Eliminar</button></a></td>
                     </tr>
                     <?php
                 }

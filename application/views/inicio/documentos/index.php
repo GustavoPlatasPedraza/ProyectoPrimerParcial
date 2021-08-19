@@ -1,6 +1,7 @@
 <?php $this->load->view("headers/header") ?>
-<h1>Documentos</h1>
+
 <div class="container">
+<h1>Documentos</h1>
 <div class="row">
 <table class="table table-dark table-striped">
         <thead>
@@ -14,7 +15,7 @@
         </thead>
         <tbody>
             <?php
-                foreach($documentos as $documento){
+                foreach($_SESSION["documentos"] as $documento){
                     ?>
                     <tr style="text-align: center;">
                         <td><?php echo $documento["id"] ?></td>

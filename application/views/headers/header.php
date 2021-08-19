@@ -6,7 +6,7 @@ if(!isset($_SESSION["id"])){
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es-MX">
 
 <head>
 	<meta charset="UTF-8">
@@ -48,7 +48,7 @@ if(!isset($_SESSION["id"])){
                         <i class='bx bx-buildings nav_icon'></i>
                         <span class="nav_name">Departamentos</span>
                     </a>
-                    <a href="#" class="nav_link" title="Usuarios"> 
+                    <a href="<?php echo base_url("adminUsuarios")?>" class="nav_link" title="Usuarios"> 
                         <i class='bx bx-user nav_icon'></i>
                         <span class="nav_name">Usuarios</span>
                     </a>
@@ -58,11 +58,11 @@ if(!isset($_SESSION["id"])){
                     </a> 
                 </div>
                     <?php
-                }else{
+                }else if($_SESSION["tipo"] == 0){
                     ?>
                     <div class="nav_list">
-                    <a href="<?php echo base_url("userDocumentos") ?>" class="nav_link" title="Trabajadores">
-                        <i class='bx bx-shopping-bag nav_icon'></i>
+                    <a href="<?php echo base_url("userDocumentos") ?>" class="nav_link" title="Documentos">
+                        <i class="fas fa-file-alt"></i>
                         <span class="nav_name">Documentos</span>
                     </a>
 					<a href="<?php echo base_url("cambiarPass")?>" class="nav_link" title="Cambiar contraseña">
@@ -71,6 +71,8 @@ if(!isset($_SESSION["id"])){
                     </a> 
                 </div>
                     <?php
+                }else if ($_SESSION["tipo"] == 2){
+                    
                 }
                  ?>
 				

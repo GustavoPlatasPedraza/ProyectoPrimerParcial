@@ -1,6 +1,8 @@
 <?php $this->load->view("headers/header") ?>
-	<div class="container">
-    <table class="table table-dark table-striped">
+<div class="container">
+<h1>Personas</h1>
+<div class="row">
+<table class="table table-dark table-striped">
         <thead>
             <tr>
                 <th>ID</th>
@@ -28,15 +30,7 @@
                     ?>
         </tbody>
     </table>
-    <div class="row">
-        <a href="<?php echo base_url("addPersona") ?>" class="btn btn-block btn-success btn-lg">Agregar persona</a>
-    </div>
-	</div>
-    <script type="text/javascript">
-    var base_url = "<?php echo base_url(); ?>";
-    </script>
-    <script type="text/javascript">
-    var id_delete = "<?php echo $this->session->flashdata('id_delete'); ?>"
-    </script>
-	<?php $this->load->view("footers/footer") ?>
-    <script src="<?php echo base_url("resources/js/delete.js")?>"></script>
+    <a href="<?php echo base_url("addPersona") ?>" class="btn btn-block btn-success btn-lg">Agregar persona</a>
+</div>
+</div>
+<?php $this->load->view("footers/footer") ?>

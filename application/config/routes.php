@@ -71,7 +71,6 @@ $route['addTrabajador'] = 'loginController/addTrabajador';
 $route['deleteTrabajador/(:any)'] = 'loginController/deleteTrabajador/$1';
 $route['confirmDeleteTrabaajdores'] = 'loginController/confirmDeleteTrabaajdores';
 $route['insertTrabajador/(:any)'] = 'loginController/insertTrabajador/$1';
-=======
 $route['deleteTrabajador/(:any)'] = 'loginController/deleteTrabajador/$1';
 
 //apartado de departamentos
@@ -86,7 +85,7 @@ $route['addDepartamento'] = 'loginController/addDepartamento';
 $route['confirmDelete'] = 'loginController/confirmDelete';
 $route['prueba'] = 'loginController/prueba';
 $route['confirmDeleteDepartamento'] = 'loginController/confirmDeleteDepartamento';
-$route['insertDepartamentos/(:any)'] = 'loginController/insertDepartamentos/$1';
+$route['insert/(:any)'] = 'loginController/insert/$1';
 $route['addTrabajador'] = 'loginController/addTrabajador';
 $route['deleteTrabajador/(:any)'] = 'loginController/deleteTrabajador/$1';
 $route['confirmDeleteTrabaajdores'] = 'loginController/confirmDeleteTrabaajdores';
@@ -105,7 +104,13 @@ $route["editDocumento/(:any)"] = "loginController/editDocumento/$1";
 $route["actInfo/(:any)"] = "loginController/actInfo/$1";
 $route["deleteDocumento/(:any)"] = "loginController/deleteDocumento/$1";
 $route["confirmDeleteDocumentos"] = "loginController/confirmDeleteDocumentos";
+$route["confirmDocumentoComun/(:any)"] = "loginController/confirmDocumentoComun/$1";
+$route["deleteDocumentoComun"] = "loginController/deleteDocumentoComun"; 
+$route["insertComun/(:any)"] = "loginController/insertComun/$1";
 //Apartado de documentos de usuario común
 $route["userDocumentos"] = "loginController/userDocumentos";
 $route["addDocumentoUser"] = "loginController/addDocumentoUser";
 $route["editDocumentoUser/(:any)"] = "loginController/editDocumentoUser/$1";
+//Google
+$route['generar_url'] = 'loginController/generar_url';
+$route['google_login'] = 'loginController/google_login';

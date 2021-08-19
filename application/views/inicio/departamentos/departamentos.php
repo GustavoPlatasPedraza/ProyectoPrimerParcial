@@ -1,7 +1,8 @@
-<<?php $this->load->view("headers/header") ?>
-	<div class="container">
-    <h1>Departamentos</h1>
-    <table class="table table-dark table-striped">
+<?php $this->load->view("headers/header") ?>
+<div class="container">
+<h1>Departamentos</h1>
+<div class="row">
+<table class="table table-dark table-striped">
         <thead>
             <tr>
                 <th>ID</th>
@@ -31,15 +32,7 @@
                     ?>
         </tbody>
     </table>
-    <div class="row">
-        <a href="<?php echo base_url("addDepartamento") ?>" class="btn btn-block btn-success btn-lg">Agregar Departamento</a>
-    </div>
-	</div>
-    <script type="text/javascript">
-    var base_url = "<?php echo base_url(); ?>";
-    </script>
-    <script type="text/javascript">
-    var id_delete = "<?php echo $this->session->flashdata('id_delete'); ?>"
-    </script>
-	<?php $this->load->view("footers/footer") ?>
-    <script src="<?php echo base_url("resources/js/deleteDepartamentos.js")?>"></script>
+    <a href="<?php echo base_url("addDepartamento") ?>" class="btn btn-block btn-success btn-lg">Agregar Departamento</a>
+</div>
+</div>
+<?php $this->load->view("footers/footer") ?>

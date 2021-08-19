@@ -1,11 +1,24 @@
-<?php
+<?php    
+use Google\Service\Oauth2;
 class loginController extends CI_Controller{
+    public $google_client;
     public function __construct(){
         parent::__construct();
         $this->load->helper("url"); //url permite accesar a los controladores de una manera mas practica
         $this->load->helper("cookie");
         $this->load->model("login");
         date_default_timezone_set('America/Monterrey');
+        include_once APPPATH  . "libraries/vendor/autoload.php";
+        $this->google_client = new \Google_Client();
+		$this->google_client->setClientId('629307595356-bi1jr98e13egohke6c7jhlj9o1oih4gt.apps.googleusercontent.com');
+		$this->google_client->setClientSecret('SjsANMdspiuEFD4eqdytUmVg');
+		$this->google_client->setRedirectUri(base_url().'/google_login');
+		$this->google_client->addScope('email');
+		$this->google_client->addScope('profile');
+		$this->google_client->addScope('https://www.googleapis.com/auth/tasks');
+		$this->google_client->addScope('https://www.googleapis.com/auth/tasks.readonly');
+		$this->google_client->setAccessType('offline');
+		$this->google_client->setApprovalPrompt('force');
     }
 
     public function index(){
@@ -18,7 +31,6 @@ class loginController extends CI_Controller{
         if($res == ""){
             $this->session->set_flashdata('message','error');
             redirect(base_url());
-            
         }else{
             $pass = $res['password'];
             //$pass_encriptada = password_hash($data["contra"],PASSWORD_DEFAULT);
@@ -42,13 +54,18 @@ class loginController extends CI_Controller{
     
     
 
-    public function inicio(){
+    
+        public function inicio(){
         $this->load->view("inicio/index");
     }
-
-    public function adminPersonas(){
+    ////////////////////////////PERSONAS///////////////////////////////
+    public function adminPersonas(){  //Vista
         $res = $this->login->adminPersonas();
         $_SESSION["personas"]= $res;
+        if($this->session->flashdata('message') == 'borrar'){
+            $this->session->set_flashdata("id_delete","");
+            $this->session->set_flashdata('message','');
+        }
         $this->load->view("inicio/personas/personas");
     }
 
@@ -60,13 +77,9 @@ class loginController extends CI_Controller{
 
     public function actInfoPersonas(){
         $data = $this->input->post();
-        try{
-            $res = $this->login->actInfoPersonas($data);
-            redirect(base_url("adminPersonas"));
-        }catch(Exception $error){
-            echo $error;
-        }
-        print_r($data);
+        $res = $this->login->actInfoPersonas($data);
+        $res == "nice" ? $this->session->set_flashdata('message','cambioAct'):$this->session->set_flashdata('message','errorAct');
+        redirect(base_url("adminPersonas"));
     }
 
     public function deletePersonas($id){
@@ -92,7 +105,16 @@ class loginController extends CI_Controller{
         $data["estado"] = 1;
         $res = $this->login->insert($data,$tabla);
         $res == "nice" ? $this->session->set_flashdata('message','success') : $this->session->set_flashdata('message','errorInsert');
-        redirect(base_url("inicio"));
+        if($tabla == "departamentos"){
+            $res == "nice" ? $this->session->set_flashdata('message','success') : $this->session->set_flashdata('message','errorInsert'); 
+            redirect(base_url("departamentos"));
+        }else if($tabla == "documentos"){
+            $res == "nice" ? $this->session->set_flashdata('message','success') : $this->session->set_flashdata('message','errorInsert'); 
+            redirect(base_url("adminDocumentos"));
+        }else if($tabla == "personas"){
+            $res == "nice" ? $this->session->set_flashdata('message','success') : $this->session->set_flashdata('message','errorInsert'); 
+            redirect(base_url("adminPersonas"));
+        }
     }
 
     public function logout(){
@@ -121,11 +143,14 @@ class loginController extends CI_Controller{
 
     
 
-    //apartado de departamentos
-
+    //////////////////////DEPARTAMENTOS//////////////////////////////////
     public function departamentos(){
         $res = $this->login->departamentos();
         $_SESSION["departamentos"]= $res;
+        if($this->session->flashdata('message') == 'borrarDepartamento'){
+            $this->session->set_flashdata("id_delete","");
+            $this->session->set_flashdata('message','');
+        }
         $this->load->view("inicio/departamentos/departamentos");
     }
 
@@ -137,26 +162,17 @@ class loginController extends CI_Controller{
 
     public function actInfoDepartamentos(){
         $data = $this->input->post();
-        try{
-            $res = $this->login->actInfoDepartamentos($data);
-            redirect(base_url("departamentos"));
-        }catch(Exception $error){
-            echo $error;
-        }
-       
-    }
-
-    public function userDocumentos(){
-        $res = $this->login->selectAllCondition("documentos","id_persona",$_SESSION["id_persona"]);
-        //$data["documentos"] = $res;
-        //$this->load->view("inicio/documentos/userDocumentos",$data);
+        $res = $this->login->actInfoDepartamentos($data);
+        $res == "nice" ? $this->session->set_flashdata('message','cambioAct'):$this->session->set_flashdata('message','errorAct');
+        redirect(base_url("departamentos"));
     }
 
     public function deleteDepartamento($id){
         $this->session->set_flashdata("id_delete",$id);
-        $this->session->set_flashdata('message','borrar');
+        $this->session->set_flashdata('message','borrarDepartamento');
         $this->load->view("inicio/departamentos/departamentos");
     }
+
     public function confirmDeleteDepartamento(){
         $id = $_POST["id"];
         $res = $this->login->deleteDepartamentos("departamentos",$id);
@@ -166,11 +182,24 @@ class loginController extends CI_Controller{
     public function addDepartamento(){
         $this->load->view("inicio/departamentos/addDepartamento");
     }
-    public function deleteTrabajador($id){
-        $this->session->set_flashdata("id_delete",$id);
-        $this->session->set_flashdata('message','borrar');
+
+    /////////////////////////TRABAJADORES///////////////////////////////
+    public function trabajadores(){
+        $res = $this->login->trabajadores();
+        $_SESSION["trabajadores"] = $res;
+        if($this->session->flashdata('message') == 'borrarTrabajador'){
+            $this->session->set_flashdata("id_delete","");
+            $this->session->set_flashdata('message','');
+        }
         $this->load->view("inicio/trabajadores/trabajadores");
     }
+
+    public function deleteTrabajador($id){
+        $this->session->set_flashdata("id_delete",$id);
+        $this->session->set_flashdata('message','borrarTrabajador');
+        $this->load->view("inicio/trabajadores/trabajadores");
+    }
+
     public function confirmDeleteTrabaajdores(){
         $id = $_POST["id"];
         $res = $this->login->delete("trabajadores",$id);
@@ -180,7 +209,10 @@ class loginController extends CI_Controller{
     public function addTrabajador(){
         $res = $this->login->selectAlldepartamentos("departamentos");
         $data["departamentos"] = $res;
-        $this->load->view("inicio/trabajadores/addtrabajador",$data);
+        
+        $res2 = $this->login->selectAllUsuarios("personas");
+        $data["personas"] = $res2;
+        $this->load->view("inicio/trabajadores/addTrabajador",$data);
     }
 
     public function insertTrabajador($tabla){
@@ -192,13 +224,27 @@ class loginController extends CI_Controller{
         $res == "nice" ? $this->session->set_flashdata('message','success') : $this->session->set_flashdata('message','errorInsert');
         redirect(base_url("trabajadores"));
     }
-
-
     
-  
+    public function editTrabajador($id){
+        $res = $this->login->getInfo("trabajadores",$id);
+        $_SESSION["datosEditTrabajadores"]= $res;
+        $this->load->view("inicio/trabajadores/editTrabajador");
+    }
+
+    public function actInfoTrabaajdores(){
+        $data = $this->input->post();
+        $res = $this->login->actInfoTrabaajdores($data);
+        $res == "nice" ? $this->session->set_flashdata('message','cambioAct'):$this->session->set_flashdata('message','errorAct');
+        redirect(base_url("trabajadores"));
+    }
+    /////////////////////////////USUARIOS//////////////////////////////////
     public function adminUsuarios(){
         $res = $this->login->adminUsuarios();
         $_SESSION["usuarios"] = $res;
+        if($this->session->flashdata('message') == 'borrarUsuario'){
+            $this->session->set_flashdata("id_delete","");
+            $this->session->set_flashdata('message','');
+        }
         $this->load->view("inicio/usuarios/usuarios");
     }
 
@@ -210,18 +256,15 @@ class loginController extends CI_Controller{
 
     public function actInfoUsuarios(){
         $data = $this->input->post();
-        try {
-            $res = $this->login->actInfoUsuarios($data);
-            redirect(base_url("adminUsuarios"));
-        } catch (Exception $th) {
-            echo $th;
-        }
-        print_r($data);
+        $data["tipo_usuario"] == "Admin" ? $data["tipo_usuario"] = 1:$data["tipo_usuario"] = 0;
+        $res = $this->login->actInfoUsuarios($data);
+        $res == "nice" ? $this->session->set_flashdata('message','cambioAct'):$this->session->set_flashdata('message','errorAct');
+        redirect(base_url("adminUsuarios"));
     }
 
     public function deleteUsuario($id){
         $this->session->set_flashdata("id_delete", $id);
-        $this->session->set_flashdata('message','borrar');
+        $this->session->set_flashdata('message','borrarUsuario');
         $this->load->view("inicio/usuarios/usuarios");
     }
 
@@ -245,16 +288,22 @@ class loginController extends CI_Controller{
         $pass_encriptada = password_hash("123456789",PASSWORD_DEFAULT);
         $data["password"] = $pass_encriptada;
         $data["estado"] = 1;
+        $data["tipo_usuario"] == "Admin" ? $data["tipo_usuario"] = 1:$data["tipo_usuario"] = 0;
         $res = $this->login->insertUsuario($data,$tabla);
         $res == "nice" ? $this->session->set_flashdata('message','success') : $this->session->set_flashdata("message","errorInsert");
         redirect(base_url("adminUsuarios"));
     }
-    //Apartado de documentos
+
+    ////////////////////////DOCUMENTOS////////////////////////////
 
     public function adminDocumentos(){
         $res = $this->login->selectAll("documentos");
-        $data["documentos"] = $res;
-        $this->load->view("inicio/documentos/index",$data);
+        $_SESSION["documentos"] = $res;
+        if($this->session->flashdata('message') == 'borrarDocumento'){
+            $this->session->set_flashdata("id_delete","");
+            $this->session->set_flashdata('message','');
+        }
+        $this->load->view("inicio/documentos/index");
     }
 
     public function addDocumento(){
@@ -287,7 +336,7 @@ class loginController extends CI_Controller{
     public function deleteDocumento($id){
         $this->session->set_flashdata("id_delete",$id);
         $this->session->set_flashdata('message','borrarDocumento');
-        redirect(base_url("adminDocumentos"));
+        $this->load->view("inicio/documentos/index");
     }
 
     public function confirmDeleteDocumentos(){
@@ -296,10 +345,16 @@ class loginController extends CI_Controller{
         echo $res;
     }
 
+    /////////////////////USER DOCUMENTOS/////////////////
+    
     public function userDocumentos(){
         $res = $this->login->selectAllCondition("documentos","id_persona",$_SESSION["id_persona"]);
-        $data["documentos"] = $res;
-        $this->load->view("inicio/documentos/userDocumentos",$data);
+        $_SESSION["documentos"] = $res;
+        if($this->session->flashdata('message') == 'borrarDocumentoComun'){
+            $this->session->set_flashdata("id_delete","");
+            $this->session->set_flashdata('message','');
+        }
+        $this->load->view("inicio/documentos/userDocumentos");
     }
 
     public function addDocumentoUser(){
@@ -312,5 +367,104 @@ class loginController extends CI_Controller{
         $this->load->view("inicio/documentos/editDocumentoUser",$data);
     }
 
-    //Apartado de documentos
+    public function confirmDocumentoComun($id){
+        $this->session->set_flashdata("id_delete",$id);
+        $this->session->set_flashdata('message','borrarDocumentoComun');
+        $this->load->view("inicio/documentos/userDocumentos");
+    }
+
+    public function deleteDocumentoComun(){
+        $id = $_POST["id"];
+        $res = $this->login->delete("documentos",$id);
+        echo $res;
+    }
+
+    public function insertComun($tabla){
+        $data = $this->input->post();
+        $data["fecha_registro"] = date("Y-m-d");
+        $data["hora_registro"] = date("H:i:s");
+        $data["estado"] = 1;
+        $res = $this->login->insert($data,$tabla);
+        $res == "nice" ? $this->session->set_flashdata('message','success') : $this->session->set_flashdata('message','errorInsert');
+        if($tabla == "documentos"){
+            $res == "nice" ? $this->session->set_flashdata('message','success') : $this->session->set_flashdata('message','errorInsert'); 
+            redirect(base_url("userDocumentos"));
+        }
+    }
+
+    //////////////////////GOOGLE API////////////////////////////
+    
+    public function generar_url(){
+		if(!isset($_SESSION['access_token'])){
+			$code = $this->google_client->createAuthUrl();
+            $_SESSION["code"] = $code;
+			echo $code;
+		}
+	}
+
+    public function google_login(){
+		if(isset($_SESSION['google_user'])){
+			$this->load->view('inicio/index');
+		}else{
+            
+			//Obtener la URL por el metodo get
+            $split = explode("/","$_SERVER[REQUEST_URI]");
+			$code = $_SESSION["code"];
+            $code = $_GET["code"];
+			if($code){
+				//generamos el token
+				$token = $this->google_client->fetchAccessTokenWithAuthCode($code);
+				if(!isset($token['error'])){
+					//colocamos el token de acceso del cliente
+					$this->google_client->setAccessToken($token);
+					//Guardamos el token de acceso en una variable de sesion
+					$_SESSION['token'] = $token;
+					$_SESSION['access_token'] = $token["access_token"];
+
+					//obtenemos la informacion del usuario
+					$google_service = new \Google_Service_Oauth2($this->google_client);
+					$gdata = $google_service->userinfo->get();
+					//var_dump($gdata);
+					$fecha = date("Y-m-d H:i:s");
+
+					if($this->login->googleUserExists($gdata['id'])){
+						//actualizamos
+						$userData = [
+							'first_name' => $gdata['givenName'],
+							'last_name' => $gdata['family_name'],
+							'email' => $gdata['email'],
+							'profile_pic' => $gdata['picture'],
+							'updated_at' => $fecha
+						];
+						$this->login->updateGoogleUser($userData,$gdata['id']);
+						$_SESSION['google_user'] = $userData;
+					}else{
+						//insertamos un nuevo registro
+						$userData = [
+							'oauth_id' => $gdata['id'],
+							'first_name' => $gdata['givenName'],
+							'last_name' => $gdata['family_name'],
+							'email' => $gdata['email'],
+							'profile_pic' => $gdata['picture'],
+							'updated_at' => $fecha
+						];
+
+						$res = $this->login->createGoogleUser($userData);
+                        
+                    }
+
+					$_SESSION['google_user'] = $userData;
+
+				}
+                    session_start();
+                    $_SESSION["id"] = "GoogleID";
+                    $_SESSION["tipo"] = "2";
+			}
+
+			echo '<script>window.close();</script>';
+		}
+
+	}
+
+    
 }

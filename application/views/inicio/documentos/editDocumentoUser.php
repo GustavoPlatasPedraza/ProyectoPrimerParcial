@@ -9,7 +9,9 @@
             <h3>Tipo de documento</h3>
             <input type="text" class="form-control" name="tipo_documento" id="tipo_documento" required value="<?php echo $documento["tipo_documento"] ?>">
             <hr>
-            <button type="submit" class="btn btn-success btn-block btn-lg">Actualizar datos</button>
+            <div class="row">
+                <button type="submit" class="btn btn-success btn-block">Actualizar datos</button>
+            </div>
         </form>
     </div>
 </div>
